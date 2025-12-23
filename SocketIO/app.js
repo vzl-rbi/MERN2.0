@@ -15,8 +15,19 @@ const server = app.listen(PORT, () =>
 const io = new Server(server);
 io.on("connection", (socket) => {
   // console.log(socket.id);
-  console.log("someone has connected!!");
-  socket.on("disconnect", () => {
-    console.log("User is Disconnected!!");
+  // socket.emit("greet", {
+  //   greeting: "Hello sir,  welcome to the Socket.Io",
+  // });
+  console.log("Client connected:", socket.id);
+  socket.on("sendData", (data) => {
+    // console.log(data);
+    if (data) {
+      // socket.emit("response", "Thank you!!. I received your Data");
+      // Server sends to ALL connected clients
+      io.emit("globalMessage", { message: "Hello, Everyone!!" });
+    }
   });
+  // socket.on("disconnect", () => {
+  //   console.log("User is Disconnected!!");
+  // });
 });
